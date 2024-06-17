@@ -1,5 +1,5 @@
 ahsbahdb
 int main(void) { return 0; }
 
-  Pro git?
-  pera ai vamos tentar commitar temo que ver se vai rolar td mundo
+ok
+sim, calma ai que o jonathan ta fazendo, se vai o proximo
