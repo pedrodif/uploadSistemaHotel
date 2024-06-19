@@ -100,8 +100,33 @@ void cadastrarFuncionario(Funcionario funcionarios[], int *num_funcionarios) {
   printf("Funcionário cadastrado com sucesso.\n");
 }
 
-void pesquisarFuncionario(){
-  
+void pesquisarFuncionario(Funcionario funcionarios[], int num_funcionarios) {
+    int opcao;
+    printf("Pesquisar por (1) C�digo ou (2) Nome: ");
+    scanf("%d", &opcao);
+
+    if (opcao == 1) {
+        int codigo;
+        printf("Digite o c�digo do funcion�rio: ");
+        scanf("%d", &codigo);
+        for (int i = 0; i < num_funcionarios; i++) {
+            if (funcionarios[i].codigo == codigo) {
+                printf("C�digo: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSal�rio: %.2f\n", funcionarios[i].codigo, funcionarios[i].nome, funcionarios[i].telefone, funcionarios[i].cargo, funcionarios[i].salario);
+                return;
+            }
+        }
+    } else if (opcao == 2) {
+        char nome[100];
+        printf("Digite o nome do funcion�rio: ");
+        scanf(" %[^\n]", nome);
+        for (int i = 0; i < num_funcionarios; i++) {
+            if (strcmp(funcionarios[i].nome, nome) == 0) {
+                printf("C�digo: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSal�rio: %.2f\n", funcionarios[i].codigo, funcionarios[i].nome, funcionarios[i].telefone, funcionarios[i].cargo, funcionarios[i].salario);
+                return;
+            }
+        }
+    }
+    printf("Funcion�rio n�o encontrado.\n");
 }
 
 void cadastrarQuarto(Quarto quartos[], int *num_quartos) {
