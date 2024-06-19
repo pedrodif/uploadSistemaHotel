@@ -102,31 +102,31 @@ void cadastrarFuncionario(Funcionario funcionarios[], int *num_funcionarios) {
 
 void pesquisarFuncionario(Funcionario funcionarios[], int num_funcionarios) {
     int opcao;
-    printf("Pesquisar por (1) C�digo ou (2) Nome: ");
+    printf("Pesquisar por (1) Código ou (2) Nome: ");
     scanf("%d", &opcao);
 
     if (opcao == 1) {
         int codigo;
-        printf("Digite o c�digo do funcion�rio: ");
+        printf("Digite o código do funcionário: ");
         scanf("%d", &codigo);
         for (int i = 0; i < num_funcionarios; i++) {
             if (funcionarios[i].codigo == codigo) {
-                printf("C�digo: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSal�rio: %.2f\n", funcionarios[i].codigo, funcionarios[i].nome, funcionarios[i].telefone, funcionarios[i].cargo, funcionarios[i].salario);
+                printf("Código: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSal�rio: %.2f\n", funcionarios[i].codigo, funcionarios[i].nome, funcionarios[i].telefone, funcionarios[i].cargo, funcionarios[i].salario);
                 return;
             }
         }
     } else if (opcao == 2) {
         char nome[100];
-        printf("Digite o nome do funcion�rio: ");
+        printf("Digite o nome do funcionário: ");
         scanf(" %[^\n]", nome);
         for (int i = 0; i < num_funcionarios; i++) {
             if (strcmp(funcionarios[i].nome, nome) == 0) {
-                printf("C�digo: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSal�rio: %.2f\n", funcionarios[i].codigo, funcionarios[i].nome, funcionarios[i].telefone, funcionarios[i].cargo, funcionarios[i].salario);
+                printf("Código: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSalário: %.2f\n", funcionarios[i].codigo, funcionarios[i].nome, funcionarios[i].telefone, funcionarios[i].cargo, funcionarios[i].salario);
                 return;
             }
         }
     }
-    printf("Funcion�rio n�o encontrado.\n");
+    printf("Funcionário não encontrado.\n");
 }
 
 void cadastrarQuarto(Quarto quartos[], int *num_quartos) {
@@ -168,25 +168,25 @@ void cadastrarEstadia(Estadia estadias[], int *num_estadias, Quarto quartos[],
   }
 
   Estadia nova_estadia;
-  nova_estadia.codigo = *num_estadias + 1; // Gera��o autom�tica de c�digo
+  nova_estadia.codigo = *num_estadias + 1; // Geração automática de código
 
   // Entrada de dados da estadia
   printf("Data de Entrada (dd/mm/aaaa): ");
   scanf(" %[^\n]", nova_estadia.data_entrada);
-  printf("Data de Sa�da (dd/mm/aaaa): ");
+  printf("Data de Saída (dd/mm/aaaa): ");
   scanf(" %[^\n]", nova_estadia.data_saida);
-  printf("Quantidade de Di�rias: ");
+  printf("Quantidade de Diárias: ");
   scanf("%d", &nova_estadia.quantidade_diarias);
   printf("C�digo do Cliente: ");
   scanf("%d", &nova_estadia.codigo_cliente);
   printf("N�mero do Quarto: ");
   scanf("%d", &nova_estadia.numero_quarto);
 
-  // Verifica se o quarto est� ocupado
+  // Verifica se o quarto está ocupado
   for (int i = 0; i < num_quartos; i++) {
     if (quartos[i].numero == nova_estadia.numero_quarto) {
       if (strcmp(quartos[i].status, "ocupado") == 0) {
-        printf("Erro: o quarto est� ocupado.\n");
+        printf("Erro: o quarto está ocupado.\n");
         return;
       } else {
         strcpy(quartos[i].status, "ocupado");
@@ -204,7 +204,7 @@ void cadastrarEstadia(Estadia estadias[], int *num_estadias, Quarto quartos[],
   }
 
   if (!cliente_existe) {
-    printf("Erro: cliente n�o encontrado.\n");
+    printf("Erro: cliente não encontrado.\n");
     return;
   }
 
