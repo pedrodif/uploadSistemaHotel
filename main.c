@@ -4,6 +4,7 @@
 #define MAX_CLIENTES 100
 #define MAX_FUNCIONARIOS 50
 #define MAX_QUARTOS 100
+#define MAX_ESTADIAS 200
 
 typedef struct {
   int codigo;
@@ -26,6 +27,15 @@ typedef struct {
   float valor_diaria;
   char status[10];
 } Quarto;
+
+typedef struct {
+  int codigo;
+  char data_entrada[11];
+  char data_saida[11];
+  int quantidade_diarias;
+  int codigo_cliente;
+  int numero_quarto;
+} Estadia;
 
 void cadastrarCliente(Cliente clientes[], int *num_clientes) {
   if (*num_clientes >= MAX_CLIENTES) {
@@ -90,6 +100,35 @@ void cadastrarFuncionario(Funcionario funcionarios[], int *num_funcionarios) {
   printf("Funcionário cadastrado com sucesso.\n");
 }
 
+void pesquisarFuncionario(Funcionario funcionarios[], int num_funcionarios) {
+    int opcao;
+    printf("Pesquisar por (1) Código ou (2) Nome: ");
+    scanf("%d", &opcao);
+
+    if (opcao == 1) {
+        int codigo;
+        printf("Digite o código do funcionário: ");
+        scanf("%d", &codigo);
+        for (int i = 0; i < num_funcionarios; i++) {
+            if (funcionarios[i].codigo == codigo) {
+                printf("Código: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSal�rio: %.2f\n", funcionarios[i].codigo, funcionarios[i].nome, funcionarios[i].telefone, funcionarios[i].cargo, funcionarios[i].salario);
+                return;
+            }
+        }
+    } else if (opcao == 2) {
+        char nome[100];
+        printf("Digite o nome do funcionário: ");
+        scanf(" %[^\n]", nome);
+        for (int i = 0; i < num_funcionarios; i++) {
+            if (strcmp(funcionarios[i].nome, nome) == 0) {
+                printf("Código: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSalário: %.2f\n", funcionarios[i].codigo, funcionarios[i].nome, funcionarios[i].telefone, funcionarios[i].cargo, funcionarios[i].salario);
+                return;
+            }
+        }
+    }
+    printf("Funcionário não encontrado.\n");
+}
+
 void cadastrarQuarto(Quarto quartos[], int *num_quartos) {
   if (*num_quartos >= MAX_QUARTOS) {
     printf("Limite de quartos atingido.\n");
@@ -119,6 +158,59 @@ void cadastrarQuarto(Quarto quartos[], int *num_quartos) {
   quartos[*num_quartos] = novo_quarto;
   (*num_quartos)++;
   printf("Quarto cadastrado com sucesso.\n");
+}
+
+void cadastrarEstadia(Estadia estadias[], int *num_estadias, Quarto quartos[],
+                      int num_quartos, Cliente clientes[], int num_clientes) {
+  if (*num_estadias >= MAX_ESTADIAS) {
+    printf("Limite de estadias atingido.\n");
+    return;
+  }
+
+  Estadia nova_estadia;
+  nova_estadia.codigo = *num_estadias + 1; // Geração automática de código
+
+  // Entrada de dados da estadia
+  printf("Data de Entrada (dd/mm/aaaa): ");
+  scanf(" %[^\n]", nova_estadia.data_entrada);
+  printf("Data de Saída (dd/mm/aaaa): ");
+  scanf(" %[^\n]", nova_estadia.data_saida);
+  printf("Quantidade de Diárias: ");
+  scanf("%d", &nova_estadia.quantidade_diarias);
+  printf("C�digo do Cliente: ");
+  scanf("%d", &nova_estadia.codigo_cliente);
+  printf("N�mero do Quarto: ");
+  scanf("%d", &nova_estadia.numero_quarto);
+
+  // Verifica se o quarto está ocupado
+  for (int i = 0; i < num_quartos; i++) {
+    if (quartos[i].numero == nova_estadia.numero_quarto) {
+      if (strcmp(quartos[i].status, "ocupado") == 0) {
+        printf("Erro: o quarto está ocupado.\n");
+        return;
+      } else {
+        strcpy(quartos[i].status, "ocupado");
+      }
+    }
+  }
+
+  // Verifica se o cliente existe
+  int cliente_existe = 0;
+  for (int i = 0; i < num_clientes; i++) {
+    if (clientes[i].codigo == nova_estadia.codigo_cliente) {
+      cliente_existe = 1;
+      break;
+    }
+  }
+
+  if (!cliente_existe) {
+    printf("Erro: cliente não encontrado.\n");
+    return;
+  }
+
+  estadias[*num_estadias] = nova_estadia;
+  (*num_estadias)++;
+  printf("Estadia cadastrada com sucesso.\n");
 }
 
 void pesquisarCliente(Cliente clientes[], int num_clientes) {
@@ -155,6 +247,39 @@ void pesquisarCliente(Cliente clientes[], int num_clientes) {
     }
   }
   printf("Cliente não encontrado.\n");
+}
+
+void mostrarEstadiasCliente(Estadia estadias[], int num_estadias, Cliente clientes[], int num_clientes) {
+    int opcao;
+    printf("Pesquisar por (1) Código ou (2) Nome do cliente: ");
+    scanf("%d", &opcao);
+
+    int codigo_cliente = -1;
+    if (opcao == 1) {
+        printf("Digite o código do cliente: ");
+        scanf("%d", &codigo_cliente);
+    } else if (opcao == 2) {
+        char nome[100];
+        printf("Digite o nome do cliente: ");
+        scanf(" %[^\n]", nome);
+        for (int i = 0; i < num_clientes; i++) {
+            if (strcmp(clientes[i].nome, nome) == 0) {
+                codigo_cliente = clientes[i].codigo;
+                break;
+            }
+        }
+    }
+
+    if (codigo_cliente != -1) {
+        printf("Estadias do cliente:\n");
+        for (int i = 0; i < num_estadias; i++) {
+            if (estadias[i].codigo_cliente == codigo_cliente) {
+                printf("Código da Estadia: %d\nData de Entrada: %s\nData de Saída: %s\nQuantidade de Diárias: %d\nNúmero do Quarto: %d\n", estadias[i].codigo, estadias[i].data_entrada, estadias[i].data_saida, estadias[i].quantidade_diarias, estadias[i].numero_quarto);
+            }
+        }
+    } else {
+        printf("Cliente não encontrado.\n");
+    }
 }
 
 int main(void) {
