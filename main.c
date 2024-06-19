@@ -121,6 +121,42 @@ void cadastrarQuarto(Quarto quartos[], int *num_quartos) {
   printf("Quarto cadastrado com sucesso.\n");
 }
 
+void pesquisarCliente(Cliente clientes[], int num_clientes) {
+  int opcao;
+
+  printf("Pesquisar por (1)Código ou (2)Nome: ");
+  scanf("%d", &opcao);
+
+  if (opcao == 1) {
+    int codigo;
+    printf("Digite o código do cliente: ");
+    scanf("%d", &codigo);
+
+    for (int i = 0; i < num_clientes; i++) {
+      if (clientes[i].codigo == codigo) {
+        printf("Código: %d\nNome: %s\nEndereço: %s\nTelefone: %s\n",
+               clientes[i].codigo, clientes[i].nome, clientes[i].endereco,
+               clientes[i].telefone);
+        return;
+      }
+    }
+  } else if (opcao == 2) {
+    char nome[100];
+    printf("Digite o nome do cliente: ");
+    scanf(" %[^\n]", nome);
+
+    for (int i = 0; i < num_clientes; i++) {
+      if (strcmp(clientes[i].nome, nome) == 0) {
+        printf("Código: %d\nNome: %s\nEndereço: %s\nTelefone: %s\n",
+               clientes[i].codigo, clientes[i].nome, clientes[i].endereco,
+               clientes[i].telefone);
+        return;
+      }
+    }
+  }
+  printf("Cliente não encontrado.\n");
+}
+
 int main(void) {
   Quarto quartos[MAX_QUARTOS];
   Cliente clientes[MAX_CLIENTES];
