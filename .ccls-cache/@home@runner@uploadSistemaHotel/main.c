@@ -335,3 +335,14 @@ void salvarQuartos(Quarto quartos[], int num_quartos) {
     fwrite(quartos, sizeof(Quarto), num_quartos, arquivo);
     fclose(arquivo);
 }
+
+void carregarQuartos(Quarto quartos[], int *num_quartos) {
+    FILE *arquivo = fopen("quartos.dat", "rb");
+    if (arquivo == NULL) {
+        printf("Arquivo de quartos não encontrado.\n");
+        return;
+    }
+    fread(num_quartos, sizeof(int), 1, arquivo);
+    fread(quartos, sizeof(Quarto), *num_quartos, arquivo);
+    fclose(arquivo);
+}
