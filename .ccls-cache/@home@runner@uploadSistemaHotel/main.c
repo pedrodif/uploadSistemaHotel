@@ -315,6 +315,27 @@ void calcularPontosFidelidade(Estadia estadias[], int num_estadias, Cliente clie
         printf("Cliente não encontrado.\n");
     }
 }
+void salvarQuartos(Quarto quartos[], int num_quartos) {
+  FILE *arquivo = fopen("quartos.dat", "wb");
+  if (arquivo == NULL) {
+      printf("Erro ao abrir o arquivo de quartos.\n");
+      return;
+  }
+  fwrite(&num_quartos, sizeof(int), 1, arquivo);
+  fwrite(quartos, sizeof(Quarto), num_quartos, arquivo);
+  fclose(arquivo);
+}
+
+void carregarQuartos(Quarto quartos[], int *num_quartos) {
+  FILE *arquivo = fopen("quartos.dat", "rb");
+  if (arquivo == NULL) {
+      printf("Arquivo de quartos não encontrado.\n");
+      return;
+  }
+  fread(num_quartos, sizeof(int), 1, arquivo);
+  fread(quartos, sizeof(Quarto), *num_quartos, arquivo);
+  fclose(arquivo);
+}
 
 int main(void) {
   Quarto quartos[MAX_QUARTOS];
@@ -325,24 +346,3 @@ int main(void) {
   return 0;
 }
 
-void salvarQuartos(Quarto quartos[], int num_quartos) {
-    FILE *arquivo = fopen("quartos.dat", "wb");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de quartos.\n");
-        return;
-    }
-    fwrite(&num_quartos, sizeof(int), 1, arquivo);
-    fwrite(quartos, sizeof(Quarto), num_quartos, arquivo);
-    fclose(arquivo);
-}
-
-void carregarQuartos(Quarto quartos[], int *num_quartos) {
-    FILE *arquivo = fopen("quartos.dat", "rb");
-    if (arquivo == NULL) {
-        printf("Arquivo de quartos não encontrado.\n");
-        return;
-    }
-    fread(num_quartos, sizeof(int), 1, arquivo);
-    fread(quartos, sizeof(Quarto), *num_quartos, arquivo);
-    fclose(arquivo);
-}
