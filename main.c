@@ -160,6 +160,17 @@ void cadastrarQuarto(Quarto quartos[], int *num_quartos) {
   printf("Quarto cadastrado com sucesso.\n");
 }
 
+void salvarQuartos(Quarto quartos[], int num_quartos) {
+    FILE *arquivo = fopen("quartos.dat", "wb");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de quartos.\n");
+        return;
+    }
+    fwrite(&num_quartos, sizeof(int), 1, arquivo);
+    fwrite(quartos, sizeof(Quarto), num_quartos, arquivo);
+    fclose(arquivo);
+}
+
 void cadastrarEstadia(Estadia estadias[], int *num_estadias, Quarto quartos[],
                       int num_quartos, Cliente clientes[], int num_clientes) {
   if (*num_estadias >= MAX_ESTADIAS) {
