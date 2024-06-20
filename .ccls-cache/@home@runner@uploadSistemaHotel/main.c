@@ -139,21 +139,23 @@ void cadastrarEstadia(Estadia estadias[], int *num_estadias, Quarto quartos[],
   }
 
   Estadia nova_estadia;
-  nova_estadia.codigo = *num_estadias + 1; // Geração automática de código
+  nova_estadia.codigo = *num_estadias + 1;
 
-  // Entrada de dados da estadia
   printf("Data de Entrada (dd/mm/aaaa): ");
   scanf(" %[^\n]", nova_estadia.data_entrada);
+  
   printf("Data de Saída (dd/mm/aaaa): ");
   scanf(" %[^\n]", nova_estadia.data_saida);
+  
   printf("Quantidade de Diárias: ");
   scanf("%d", &nova_estadia.quantidade_diarias);
-  printf("C�digo do Cliente: ");
+  
+  printf("Código do Cliente: ");
   scanf("%d", &nova_estadia.codigo_cliente);
-  printf("N�mero do Quarto: ");
+  
+  printf("Número do Quarto: ");
   scanf("%d", &nova_estadia.numero_quarto);
 
-  // Verifica se o quarto está ocupado
   for (int i = 0; i < num_quartos; i++) {
     if (quartos[i].numero == nova_estadia.numero_quarto) {
       if (strcmp(quartos[i].status, "ocupado") == 0) {
@@ -165,7 +167,6 @@ void cadastrarEstadia(Estadia estadias[], int *num_estadias, Quarto quartos[],
     }
   }
 
-  // Verifica se o cliente existe
   int cliente_existe = 0;
   for (int i = 0; i < num_clientes; i++) {
     if (clientes[i].codigo == nova_estadia.codigo_cliente) {
