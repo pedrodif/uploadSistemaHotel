@@ -100,35 +100,6 @@ void cadastrarFuncionario(Funcionario funcionarios[], int *num_funcionarios) {
   printf("Funcionário cadastrado com sucesso.\n");
 }
 
-void pesquisarFuncionario(Funcionario funcionarios[], int num_funcionarios) {
-    int opcao;
-    printf("Pesquisar por (1) Código ou (2) Nome: ");
-    scanf("%d", &opcao);
-
-    if (opcao == 1) {
-        int codigo;
-        printf("Digite o código do funcionário: ");
-        scanf("%d", &codigo);
-        for (int i = 0; i < num_funcionarios; i++) {
-            if (funcionarios[i].codigo == codigo) {
-                printf("Código: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSal�rio: %.2f\n", funcionarios[i].codigo, funcionarios[i].nome, funcionarios[i].telefone, funcionarios[i].cargo, funcionarios[i].salario);
-                return;
-            }
-        }
-    } else if (opcao == 2) {
-        char nome[100];
-        printf("Digite o nome do funcionário: ");
-        scanf(" %[^\n]", nome);
-        for (int i = 0; i < num_funcionarios; i++) {
-            if (strcmp(funcionarios[i].nome, nome) == 0) {
-                printf("Código: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSalário: %.2f\n", funcionarios[i].codigo, funcionarios[i].nome, funcionarios[i].telefone, funcionarios[i].cargo, funcionarios[i].salario);
-                return;
-            }
-        }
-    }
-    printf("Funcionário não encontrado.\n");
-}
-
 void cadastrarQuarto(Quarto quartos[], int *num_quartos) {
   if (*num_quartos >= MAX_QUARTOS) {
     printf("Limite de quartos atingido.\n");
@@ -249,71 +220,134 @@ void pesquisarCliente(Cliente clientes[], int num_clientes) {
   printf("Cliente não encontrado.\n");
 }
 
-void mostrarEstadiasCliente(Estadia estadias[], int num_estadias, Cliente clientes[], int num_clientes) {
-    int opcao;
-    printf("Pesquisar por (1) Código ou (2) Nome do cliente: ");
-    scanf("%d", &opcao);
+void pesquisarFuncionario(Funcionario funcionarios[], int num_funcionarios) {
+  int opcao;
+  printf("Pesquisar por (1) Código ou (2) Nome: ");
+  scanf("%d", &opcao);
 
-    int codigo_cliente = -1;
-    if (opcao == 1) {
-        printf("Digite o código do cliente: ");
-        scanf("%d", &codigo_cliente);
-    } else if (opcao == 2) {
-        char nome[100];
-        printf("Digite o nome do cliente: ");
-        scanf(" %[^\n]", nome);
-        for (int i = 0; i < num_clientes; i++) {
-            if (strcmp(clientes[i].nome, nome) == 0) {
-                codigo_cliente = clientes[i].codigo;
-                break;
-            }
-        }
+  if (opcao == 1) {
+    int codigo;
+    printf("Digite o código do funcionário: ");
+    scanf("%d", &codigo);
+    for (int i = 0; i < num_funcionarios; i++) {
+      if (funcionarios[i].codigo == codigo) {
+        printf("Código: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSal�rio: %.2f\n",
+               funcionarios[i].codigo, funcionarios[i].nome,
+               funcionarios[i].telefone, funcionarios[i].cargo,
+               funcionarios[i].salario);
+        return;
+      }
     }
-
-    if (codigo_cliente != -1) {
-        printf("Estadias do cliente:\n");
-        for (int i = 0; i < num_estadias; i++) {
-            if (estadias[i].codigo_cliente == codigo_cliente) {
-                printf("Código da Estadia: %d\nData de Entrada: %s\nData de Saída: %s\nQuantidade de Diárias: %d\nNúmero do Quarto: %d\n", estadias[i].codigo, estadias[i].data_entrada, estadias[i].data_saida, estadias[i].quantidade_diarias, estadias[i].numero_quarto);
-            }
-        }
-    } else {
-        printf("Cliente não encontrado.\n");
+  } else if (opcao == 2) {
+    char nome[100];
+    printf("Digite o nome do funcionário: ");
+    scanf(" %[^\n]", nome);
+    for (int i = 0; i < num_funcionarios; i++) {
+      if (strcmp(funcionarios[i].nome, nome) == 0) {
+        printf("Código: %d\nNome: %s\nTelefone: %s\nCargo: %s\nSalário: %.2f\n",
+               funcionarios[i].codigo, funcionarios[i].nome,
+               funcionarios[i].telefone, funcionarios[i].cargo,
+               funcionarios[i].salario);
+        return;
+      }
     }
+  }
+  printf("Funcionário não encontrado.\n");
 }
 
-void calcularPontosFidelidade(Estadia estadias[], int num_estadias, Cliente clientes[], int num_clientes) {
-    int opcao;
-    printf("Pesquisar por (1) Código ou (2) Nome do cliente: ");
-    scanf("%d", &opcao);
+void mostrarEstadiasCliente(Estadia estadias[], int num_estadias,
+                            Cliente clientes[], int num_clientes) {
+  int opcao;
+  printf("Pesquisar por (1) Código ou (2) Nome do cliente: ");
+  scanf("%d", &opcao);
 
-    int codigo_cliente = -1;
-    if (opcao == 1) {
-        printf("Digite o código do cliente: ");
-        scanf("%d", &codigo_cliente);
-    } else if (opcao == 2) {
-        char nome[100];
-        printf("Digite o nome do cliente: ");
-        scanf(" %[^\n]", nome);
-        for (int i = 0; i < num_clientes; i++) {
-            if (strcmp(clientes[i].nome, nome) == 0) {
-                codigo_cliente = clientes[i].codigo;
-                break;
-            }
-        }
+  int codigo_cliente = -1;
+  if (opcao == 1) {
+    printf("Digite o código do cliente: ");
+    scanf("%d", &codigo_cliente);
+  } else if (opcao == 2) {
+    char nome[100];
+    printf("Digite o nome do cliente: ");
+    scanf(" %[^\n]", nome);
+    for (int i = 0; i < num_clientes; i++) {
+      if (strcmp(clientes[i].nome, nome) == 0) {
+        codigo_cliente = clientes[i].codigo;
+        break;
+      }
     }
+  }
 
-    if (codigo_cliente != -1) {
-        int pontos = 0;
-        for (int i = 0; i < num_estadias; i++) {
-            if (estadias[i].codigo_cliente == codigo_cliente) {
-                pontos += estadias[i].quantidade_diarias * 10;
-            }
-        }
-        printf("Pontos de fidelidade do cliente: %d\n", pontos);
-    } else {
-        printf("Cliente não encontrado.\n");
+  if (codigo_cliente != -1) {
+    printf("Estadias do cliente:\n");
+    for (int i = 0; i < num_estadias; i++) {
+      if (estadias[i].codigo_cliente == codigo_cliente) {
+        printf("Código da Estadia: %d\nData de Entrada: %s\nData de Saída: "
+               "%s\nQuantidade de Diárias: %d\nNúmero do Quarto: %d\n",
+               estadias[i].codigo, estadias[i].data_entrada,
+               estadias[i].data_saida, estadias[i].quantidade_diarias,
+               estadias[i].numero_quarto);
+      }
     }
+  } else {
+    printf("Cliente não encontrado.\n");
+  }
+}
+
+void calcularPontosFidelidade(Estadia estadias[], int num_estadias,
+                              Cliente clientes[], int num_clientes) {
+  int opcao;
+  printf("Pesquisar por (1) Código ou (2) Nome do cliente: ");
+  scanf("%d", &opcao);
+
+  int codigo_cliente = -1;
+  if (opcao == 1) {
+    printf("Digite o código do cliente: ");
+    scanf("%d", &codigo_cliente);
+  } else if (opcao == 2) {
+    char nome[100];
+    printf("Digite o nome do cliente: ");
+    scanf(" %[^\n]", nome);
+    for (int i = 0; i < num_clientes; i++) {
+      if (strcmp(clientes[i].nome, nome) == 0) {
+        codigo_cliente = clientes[i].codigo;
+        break;
+      }
+    }
+  }
+
+  if (codigo_cliente != -1) {
+    int pontos = 0;
+    for (int i = 0; i < num_estadias; i++) {
+      if (estadias[i].codigo_cliente == codigo_cliente) {
+        pontos += estadias[i].quantidade_diarias * 10;
+      }
+    }
+    printf("Pontos de fidelidade do cliente: %d\n", pontos);
+  } else {
+    printf("Cliente não encontrado.\n");
+  }
+}
+
+void salvarQuartos(Quarto quartos[], int num_quartos) {
+  FILE *arquivo = fopen("quartos.dat", "wb");
+  if (arquivo == NULL) {
+    printf("Erro ao abrir o arquivo de quartos.\n");
+    return;
+  }
+  fwrite(&num_quartos, sizeof(int), 1, arquivo);
+  fwrite(quartos, sizeof(Quarto), num_quartos, arquivo);
+  fclose(arquivo);
+}
+
+void carregarQuartos(Quarto quartos[], int *num_quartos) {
+  FILE *arquivo = fopen("quartos.dat", "rb");
+  if (arquivo == NULL) {
+    printf("Arquivo de quartos não encontrado.\n");
+    return;
+  }
+  fread(num_quartos, sizeof(int), 1, arquivo);
+  fread(quartos, sizeof(Quarto), *num_quartos, arquivo);
+  fclose(arquivo);
 }
 
 int main(void) {
@@ -323,26 +357,4 @@ int main(void) {
 
   int num_clientes = 0, num_funcionarios = 0, num_quartos = 0;
   return 0;
-}
-
-void salvarQuartos(Quarto quartos[], int num_quartos) {
-    FILE *arquivo = fopen("quartos.dat", "wb");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de quartos.\n");
-        return;
-    }
-    fwrite(&num_quartos, sizeof(int), 1, arquivo);
-    fwrite(quartos, sizeof(Quarto), num_quartos, arquivo);
-    fclose(arquivo);
-}
-
-void carregarQuartos(Quarto quartos[], int *num_quartos) {
-    FILE *arquivo = fopen("quartos.dat", "rb");
-    if (arquivo == NULL) {
-        printf("Arquivo de quartos não encontrado.\n");
-        return;
-    }
-    fread(num_quartos, sizeof(int), 1, arquivo);
-    fread(quartos, sizeof(Quarto), *num_quartos, arquivo);
-    fclose(arquivo);
 }
