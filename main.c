@@ -400,6 +400,17 @@ void salvarEstadias(Estadia estadias[], int num_estadias) {
     fclose(arquivo);
 }
 
+void carregarEstadias(Estadia estadias[], int *num_estadias) {
+    FILE *arquivo = fopen("estadias.dat", "rb");
+    if (arquivo == NULL) {
+        printf("Arquivo de estadias não encontrado.\n");
+        return;
+    }
+    fread(num_estadias, sizeof(int), 1, arquivo);
+    fread(estadias, sizeof(Estadia), *num_estadias, arquivo);
+    fclose(arquivo);
+}
+
 int main(void) {
   Quarto quartos[MAX_QUARTOS];
   Cliente clientes[MAX_CLIENTES];
