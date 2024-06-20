@@ -324,3 +324,14 @@ int main(void) {
   int num_clientes = 0, num_funcionarios = 0, num_quartos = 0;
   return 0;
 }
+
+void salvarQuartos(Quarto quartos[], int num_quartos) {
+    FILE *arquivo = fopen("quartos.dat", "wb");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de quartos.\n");
+        return;
+    }
+    fwrite(&num_quartos, sizeof(int), 1, arquivo);
+    fwrite(quartos, sizeof(Quarto), num_quartos, arquivo);
+    fclose(arquivo);
+}
