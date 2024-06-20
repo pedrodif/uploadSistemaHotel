@@ -282,6 +282,40 @@ void mostrarEstadiasCliente(Estadia estadias[], int num_estadias, Cliente client
     }
 }
 
+void calcularPontosFidelidade(Estadia estadias[], int num_estadias, Cliente clientes[], int num_clientes) {
+    int opcao;
+    printf("Pesquisar por (1) Código ou (2) Nome do cliente: ");
+    scanf("%d", &opcao);
+
+    int codigo_cliente = -1;
+    if (opcao == 1) {
+        printf("Digite o código do cliente: ");
+        scanf("%d", &codigo_cliente);
+    } else if (opcao == 2) {
+        char nome[100];
+        printf("Digite o nome do cliente: ");
+        scanf(" %[^\n]", nome);
+        for (int i = 0; i < num_clientes; i++) {
+            if (strcmp(clientes[i].nome, nome) == 0) {
+                codigo_cliente = clientes[i].codigo;
+                break;
+            }
+        }
+    }
+
+    if (codigo_cliente != -1) {
+        int pontos = 0;
+        for (int i = 0; i < num_estadias; i++) {
+            if (estadias[i].codigo_cliente == codigo_cliente) {
+                pontos += estadias[i].quantidade_diarias * 10;
+            }
+        }
+        printf("Pontos de fidelidade do cliente: %d\n", pontos);
+    } else {
+        printf("Cliente não encontrado.\n");
+    }
+}
+
 int main(void) {
   Quarto quartos[MAX_QUARTOS];
   Cliente clientes[MAX_CLIENTES];
