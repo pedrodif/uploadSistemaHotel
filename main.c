@@ -143,16 +143,16 @@ void cadastrarEstadia(Estadia estadias[], int *num_estadias, Quarto quartos[],
 
   printf("Data de Entrada (dd/mm/aaaa): ");
   scanf(" %[^\n]", nova_estadia.data_entrada);
-  
+
   printf("Data de Saída (dd/mm/aaaa): ");
   scanf(" %[^\n]", nova_estadia.data_saida);
-  
+
   printf("Quantidade de Diárias: ");
   scanf("%d", &nova_estadia.quantidade_diarias);
-  
+
   printf("Código do Cliente: ");
   scanf("%d", &nova_estadia.codigo_cliente);
-  
+
   printf("Número do Quarto: ");
   scanf("%d", &nova_estadia.numero_quarto);
 
@@ -173,6 +173,11 @@ void cadastrarEstadia(Estadia estadias[], int *num_estadias, Quarto quartos[],
       cliente_existe = 1;
       break;
     }
+  }
+
+  if (nova_estadia.quantidade_diarias <= 0) {
+    printf("Erro: quantidade de diárias inválida.\n");
+    return;
   }
 
   if (!cliente_existe) {
