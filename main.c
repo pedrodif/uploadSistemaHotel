@@ -411,6 +411,17 @@ void carregarEstadias(Estadia estadias[], int *num_estadias) {
     fclose(arquivo);
 }
 
+void salvarClientes(Cliente clientes[], int num_clientes) {
+    FILE *arquivo = fopen("clientes.dat", "wb");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        return;
+    }
+    fwrite(&num_clientes, sizeof(int), 1, arquivo);
+    fwrite(clientes, sizeof(Cliente), num_clientes, arquivo);
+    fclose(arquivo);
+}
+
 int main(void) {
   Quarto quartos[MAX_QUARTOS];
   Cliente clientes[MAX_CLIENTES];
