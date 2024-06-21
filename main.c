@@ -444,6 +444,17 @@ void salvarFuncionarios(Funcionario funcionarios[], int num_funcionarios) {
     fclose(arquivo);
 }
 
+void carregarFuncionarios(Funcionario funcionarios[], int *num_funcionarios) {
+    FILE *arquivo = fopen("funcionarios.dat", "rb");
+    if (arquivo == NULL) {
+        printf("Arquivo de funcionários não encontrado.\n");
+        return;
+    }
+    fread(num_funcionarios, sizeof(int), 1, arquivo);
+    fread(funcionarios, sizeof(Funcionario), *num_funcionarios, arquivo);
+    fclose(arquivo);
+}
+
 int main(void) {
   Quarto quartos[MAX_QUARTOS];
   Cliente clientes[MAX_CLIENTES];
