@@ -455,11 +455,80 @@ void carregarFuncionarios(Funcionario funcionarios[], int *num_funcionarios) {
     fclose(arquivo);
 }
 
-int main(void) {
-  Quarto quartos[MAX_QUARTOS];
-  Cliente clientes[MAX_CLIENTES];
-  Funcionario funcionarios[MAX_FUNCIONARIOS];
+int main() {
+    Cliente clientes[MAX_CLIENTES];
+    Funcionario funcionarios[MAX_FUNCIONARIOS];
+    Quarto quartos[MAX_QUARTOS];
+    Estadia estadias[MAX_ESTADIAS];
 
-  int num_clientes = 0, num_funcionarios = 0, num_quartos = 0;
-  return 0;
+    int num_clientes = 0;
+    int num_funcionarios = 0;
+    int num_quartos = 0;
+    int num_estadias = 0;
+
+    // Carregar dados dos arquivos
+    carregarClientes(clientes, &num_clientes);
+    carregarFuncionarios(funcionarios, &num_funcionarios);
+    carregarQuartos(quartos, &num_quartos);
+    carregarEstadias(estadias, &num_estadias);
+
+    int opcao;
+    do {
+        printf("Menu:\n");
+        printf("1. Cadastrar Cliente\n");
+        printf("2. Cadastrar Funcionario\n");
+        printf("3. Cadastrar Quarto\n");
+        printf("4. Cadastrar Estadia\n");
+        printf("5. Dar Baixa em Estadia\n");
+        printf("6. Pesquisar Cliente\n");
+        printf("7. Pesquisar Funcionario\n");
+        printf("8. Mostrar Estadias de Cliente\n");
+        printf("9. Calcular Pontos de Fidelidade\n");
+        printf("10. Sair\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        switch(opcao) {
+            case 1:
+                cadastrarCliente(clientes, &num_clientes);
+                break;
+            case 2:
+                cadastrarFuncionario(funcionarios, &num_funcionarios);
+                break;
+            case 3:
+                cadastrarQuarto(quartos, &num_quartos);
+                break;
+            case 4:
+                cadastrarEstadia(estadias, &num_estadias, quartos, num_quartos, clientes, num_clientes);
+                break;
+            case 5:
+                darBaixaEstadia(estadias, &num_estadias, quartos, num_quartos, clientes, num_clientes);
+                break;
+            case 6:
+                pesquisarCliente(clientes, num_clientes);
+                break;
+            case 7:
+                pesquisarFuncionario(funcionarios, num_funcionarios);
+                break;
+            case 8:
+                mostrarEstadiasCliente(estadias, num_estadias, clientes, num_clientes);
+                break;
+            case 9:
+                calcularPontosFidelidade(estadias, num_estadias, clientes, num_clientes);
+                break;
+            case 10:
+                printf("Saindo...\n");
+                // Salvar dados nos arquivos
+                salvarClientes(clientes, num_clientes);
+                salvarFuncionarios(funcionarios, num_funcionarios);
+                salvarQuartos(quartos, num_quartos);
+                salvarEstadias(estadias, num_estadias);
+                break;
+            default:
+                printf("Opcao invalida.\n");
+                break;
+        }
+    } while (opcao != 10);
+
+    return 0;
 }
