@@ -422,6 +422,17 @@ void salvarClientes(Cliente clientes[], int num_clientes) {
     fclose(arquivo);
 }
 
+void carregarClientes(Cliente clientes[], int *num_clientes) {
+    FILE *arquivo = fopen("clientes.dat", "rb");
+    if (arquivo == NULL) {
+        printf("Arquivo de clientes não encontrado.\n");
+        return;
+    }
+    fread(num_clientes, sizeof(int), 1, arquivo);
+    fread(clientes, sizeof(Cliente), *num_clientes, arquivo);
+    fclose(arquivo);
+}
+
 int main(void) {
   Quarto quartos[MAX_QUARTOS];
   Cliente clientes[MAX_CLIENTES];
